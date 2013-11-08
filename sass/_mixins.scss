@@ -1,0 +1,84 @@
+@mixin smooth(){
+  -webkit-font-smoothing: antialiased;
+}
+
+@mixin font-face($font-family, $file-path, $weight: normal, $style: normal ) {
+  @font-face {
+    font-family: $font-family;
+    src: url("#{$file-path}.eot");
+    src: url("#{$file-path}.eot?#iefix") format('embedded-opentype'),
+         url("#{$file-path}.woff") format('woff'),
+         url("#{$file-path}.ttf") format('truetype'),
+         url("#{$file-path}.svg##{$font-family}") format('svg');
+    font-weight: $weight;
+    font-style: $style;
+  }
+}
+
+@mixin border-radius($border){
+  -webkit-border-radius: $border;
+          border-radius: $border;
+}
+
+@mixin linear-gradient($from, $to) {
+  background-color: $from;
+  background-image: -webkit-gradient(linear, left top, left bottom, from($from), to($to));
+  background-image: -webkit-linear-gradient(top, $from, $to);
+  background-image:    -moz-linear-gradient(top, $from, $to);
+  background-image:      -o-linear-gradient(top, $from, $to);
+  background-image:         linear-gradient(to bottom, $from, $to);
+}
+
+@mixin gradient-image($from, $to, $img, $pos: 0 center){
+  background-color: $from;
+  background: $from $img $pos no-repeat;
+  background: $img $pos no-repeat, -webkit-gradient(linear, left top, left bottom, from($from), to($to));
+  background: $img $pos no-repeat, -webkit-linear-gradient(top, $from, $to);
+  background: $img $pos no-repeat,    -moz-linear-gradient(top, $from, $to);
+  background: $img $pos no-repeat,      -o-linear-gradient(top, $from, $to);
+  background: $img $pos no-repeat,        linear-gradient(to bottom, $from, $to);
+}
+
+@mixin viewport($width: device-width, $zoom: 1.0){
+  @-ms-viewport {
+    width: $width;
+    zoom: $zoom;
+  }
+
+  @viewport {
+    width: $width;
+    zoom: $zoom;
+  }
+}
+
+@mixin selection($bg-color: $main-link-color, $text-color: $main-font-color){
+
+  ::-moz-selection {
+    background: $bg-color;
+    text-shadow: none;
+    color: $text-color;
+  }
+
+  ::selection {
+    background: $bg-color;
+    text-shadow: none;
+    color: $text-color;
+  }
+
+}
+
+@mixin placeholder-color($text-color){
+
+  :-ms-input-placeholder{
+    color: $text-color;
+  }
+
+  ::-moz-placeholder {
+    color: $text-color;
+  }
+
+  ::-webkit-input-placeholder {
+    color: $text-color;
+  }
+
+}

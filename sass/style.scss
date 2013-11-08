@@ -1,0 +1,362 @@
+@charset "UTF-8";
+
+//*****************************************************************************/
+// DEFAULT IMPORTS AND VARIABLES */
+//*****************************************************************************/
+
+@import "compass/css3";
+@import "compass/utilities/sprites/base";
+
+$default-transition-property : all;
+$default-transition-duration : 0.3s;
+$default-transition-function : ease-out;
+
+//******************************************************************************/
+// BASE VARIABLES - must be at the top of the file, before any partials  */
+//*****************************************************************************/
+
+$brand-green: #54a80f;
+$brand-hover-green: #4e9e0c;
+$brand-active-green: #418807;
+
+$main-font-family: sans-serif;
+$main-font-color: #000;
+$main-link-color: $brand-green;
+
+//*****************************************************************************/
+// BASIC MIXINS */
+//*****************************************************************************/
+
+@import "rem";
+
+//as seen on: https://github.com/ry5n/rem
+//on using rem: http://snook.ca/archives/html_and_css/font-size-with-rem
+//
+// include syntax:
+// (values should be declared as pixels or rem.
+//  this mixin outputs the declared value and its related, converted unit.
+//  em values will just output em values twice.  )
+// @include rem($property, $values);
+//
+// examples:
+// @include rem(font-size, 16px);
+// @include rem(border, 1px solid #bff);
+//
+// Beware of using this mixing with font shorthand: if the statement contain
+//commas - separating font families, it will not work;
+
+@import "mixins";
+
+// FONT SMOOTHING
+//
+// @include smooth();
+//used on text that looks thicker on OSX. Generally this issue occurs on light
+//text over a dark background.
+
+
+// FONT FACE
+//
+// @include font-face(Vegur, '../fonts/vegur-regular-webfont');
+
+
+// GRADIENTS
+//
+//@include linear-gradient(#from, #to);
+//@include gradient-image(#from, #to, url(../img/img-url.png), pos-x pos-y);
+
+
+// SPRITES
+//
+// @import "nomedapasta/*.png";
+// @include all-nomedapasta-sprites( dimensions, offset-x, offset-y);
+// ou
+// @include nomedapasta-sprite(nomedaimagem, dimensions, offset-x, offset-y);
+
+/* Reset / Normalize */
+@import "reset";
+
+/******************************************************************************/
+/* STRUCTURE */
+/******************************************************************************/
+
+/* BASE STYLES - selection, links and chrome frame */
+
+@include viewport();
+
+@include selection();
+// default values: $bg-color: $main-link-color, $text-color: $main-font-color;
+
+//@include placeholder-color(#333);
+// insert the color you want for the input placeholders and uncomment the line
+// above.
+
+a{
+  color: $main-link-color;
+  //text-decoration: none;
+
+  &:hover{
+    //text-decoration: underline;
+    //color: $main-link-color-hover;
+  }
+
+  &:visited{
+
+  }
+}
+
+.browsehappy {
+  $std-chromeframe-margin: 5%;
+
+  background: #fff;
+  border: 1em solid $main-font-color;
+  position: absolute;
+  overflow: hidden;
+  text-align: center;
+  z-index: 100000;
+
+  padding: $std-chromeframe-margin;
+  left: $std-chromeframe-margin;
+  top: $std-chromeframe-margin;
+  right: $std-chromeframe-margin;
+  bottom:$std-chromeframe-margin;
+}
+
+.goto-content{
+  @extend %visuallyhidden;
+}
+
+img{
+  max-width: 100%;
+}
+
+/* FORM ELEMENTS */
+
+.std-label{
+  display: block;
+  margin-bottom: 0.75em;
+}
+
+.std-input {
+  border: 1px solid #d9d9d9;
+  padding: 0 0.8em;
+  height: 2.267em;
+  line-height: 2.267;
+  //width: 14em;
+  width: 100%;
+  vertical-align: top;
+  font-size: 15px;
+  font-size: 0.9375rem;
+  @include transition();
+  @include border-radius(3px);
+  @include box-shadow(inset 0 1px 2px #e5e6e3);
+  @include box-sizing(border-box);
+
+  &:focus{
+    background-color: #e3efd9;
+    border-color: $brand-green;
+    outline: none;
+    @include box-shadow(0 0 0 1px $brand-green);
+  }
+}
+
+.std-textarea{
+  line-height: 1.2;
+  min-height: 8em;
+  // min-height: 14em;
+  // width: 30em;
+}
+
+.button{
+  border: none;
+  color: #fff;
+  display: inline-block;
+  font-weight: bold;
+  line-height: 2.267;
+  background-color: $brand-green;
+  padding: 0 1.467em;
+  @include border-radius(3px);
+  //@include rem(font-size, 11px);
+  @include rem(font-size, 15px);
+
+  &:hover{
+    background-color: $brand-hover-green;
+    text-decoration: none;
+  }
+
+  &:active, &:focus{
+    background-color: $brand-active-green;
+    @include transform(translatey(1px));
+  }
+
+  &:focus{
+    outline: 2px solid $brand-green;
+  }
+
+}
+
+/* MAIN COMPONENTS */
+
+// default full width column
+%content-block {
+  margin: 0 auto;
+  padding: 0 2%;
+  max-width: 58.75em;
+}
+
+.content-block{
+  @extend %content-block;
+}
+
+/******************************************************************************/
+/* HEADER */
+/******************************************************************************/
+
+/* Nav abstraction - normally found in the main navigation and breacrumbs.
+  extend from here */
+.nav > a{
+  display:inline-block;
+}
+
+//opinionated main-header style
+.main-header{
+  padding-top: 2.5em;
+  padding-bottom: 1em;
+  border-top: 5px solid $brand-green;
+}
+
+.main-title{
+  font-size: 4em;
+  line-height: 1;
+}
+
+.main-headline{
+  font-size: 1.15em;
+}
+
+/******************************************************************************/
+/* FOOTER */
+/******************************************************************************/
+.main-footer{
+  clear: both;
+  padding-top: 2em;
+  padding-bottom: 1em;
+}
+
+/******************************************************************************/
+/* HOME */
+/******************************************************************************/
+h3{
+  margin-bottom: 1em;
+}
+
+body:before{
+  content: '';
+  border-top: 5px solid $brand-green;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.zeroclipboard-is-hover{
+
+}
+
+.zeroclipboard-is-active{
+
+}
+
+.std-label-text{
+  @include rem(font-size, 13px);
+  margin-left: 0.615em;
+  display: block;
+}
+
+.fields-info{
+
+  li{
+    margin-bottom: 1em;
+  }
+
+  p{
+    margin: 0;
+  }
+}
+
+.textarea-label{
+  position: relative;
+  width: 100% !important;
+}
+
+.copy-button{
+  position: absolute;
+  bottom: 0;
+  right: 0;
+
+  @include border-radius(3px 0 3px 0);
+}
+
+.secondary{
+  font-size: 0.8em;
+  margin-top: 0.15em;
+}
+
+.specs{
+  overflow: hidden;
+}
+
+/******************************************************************************/
+/* OTHER PARTIALS & STYLES */
+/******************************************************************************/
+
+/* Plugin Classes */
+// Put them here as needed.
+
+/* Helper Classes */
+@import "helpers";
+
+
+/* MEDIA QUERIES */
+@media only screen and (min-width: 35em) { // 560px
+
+  // .std-label{
+  //   width: 48%;
+  //   margin-right: 1%;
+  //   display: inline-block;
+  // }
+    /* Style adjustments for viewports that meet the condition */
+}
+
+@media only screen and (min-width: 45em) {// 720
+  // .std-label{
+  //   width: 30%;
+  //   margin-right: 2%
+  // }
+
+
+  .std-input{
+    //width: 17.467em;
+  }
+
+  .url-form{
+    float: left;
+    width: 36%;
+    margin-right: 4%;
+  }
+
+  .fields-info{
+    -webkit-columns: 2;
+       -moz-columns: 2;
+            columns: 2;
+  }
+}
+
+@media print,
+(-o-min-device-pixel-ratio: 5/4),
+(-webkit-min-device-pixel-ratio: 1.25),
+(min-resolution: 120dpi) {
+  /* Style adjustments for high resolution devices */
+}
+
+/* Print Styles */
+@import "print";

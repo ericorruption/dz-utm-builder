@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<!--[if lt IE 8]>      <html class="no-js lt-ie9 lt-ie8" lang="pt-br"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang="pt-br"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="pt-br"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>DZ UTM Builder</title>
+
+    <!-- touch icons. Use if needed: -->
+    <!-- <link rel="apple-touch-icon-precomposed" sizes="144x144" href="img/touch/apple-touch-icon-144x144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/touch/apple-touch-icon-114x114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/touch/apple-touch-icon-72x72-precomposed.png">
+
+    <link rel="apple-touch-icon-precomposed" href="img/touch/apple-touch-icon-57x57-precomposed.png">
+    <meta name="msapplication-TileImage" content="img/touch/apple-touch-icon-144x144-precomposed.png">
+    <meta name="msapplication-TileColor" content="#222222">-->
+
+    <!-- Default favicons. You should have at least two 16px icons: -->
+    <!-- one .png and one .ico file in your root for this to work. -->
+    <link rel="icon" href="favicon.png">
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Review the viewport rule in the SASS file if you change the defaults below -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- só mobile? use a metatag abaixo em vez da de cima -->
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"> -->
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <script>window.html5 || document.write('<script src="js/libs/html5.min.js"><\/script>')</script>
+    <script src="js/libs/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<header class="main-header" role="banner">
+    <div class="content-block">
+        <h1 class="main-title">DZ UTM Builder</h1>
+        <h2 class="main-headline">URL builder on steroids. It just works.</h2>
+    </div>
+    <a href="#main-content" class="goto-content">Ir para o conteúdo principal</a>
+</header>
+
+<main class="content-block main-content" id="main-content" role="main">
+    <form action="" role="form" class="std-form url-form" method="post">
+        <fieldset>
+            <legend>Formulário de geraçãdo de URL com UTM</legend>
+            <p class="secondary">Os campos com * são obrigatórios.</p>
+
+            <label class="std-label">
+                <span class="std-label-text">URL*</span>
+                <input class="std-input" type="url" data-bind="value: plainUrl, valueUpdate: 'afterkeydown'" />
+            </label>
+
+            <label class="std-label">
+                <span class="std-label-text">Origem*</span>
+                <select class="std-input std-select" data-bind="options: utmSourceValues, value: utmSource, optionsCaption: 'Selecione...'"></select>
+            </label>
+
+            <label class="std-label" data-bind="visible: utmSource() === 'Outro'">
+                <span class="std-label-text">Origem personalizada</span>
+                <input class="std-input" type="url" data-bind="value: customSource, valueUpdate: 'afterkeydown'" />
+            </label>
+
+            <label class="std-label">
+                <span class="std-label-text">Mídia / Formato*</span>
+                <select class="std-input std-select" data-bind="options: utmMediumValues, value: utmMedium, optionsCaption: 'Selecione...'"></select>
+            </label>
+
+           <label class="std-label" data-bind="visible: utmMedium() === 'Outro'">
+                <span class="std-label-text">Mídia / Formato Personalizado</span>
+                <input class="std-input" type="url" data-bind="value: customMedium, valueUpdate: 'afterkeydown'" />
+            </label>
+
+            <label class="std-label">
+                <span class="std-label-text">Termo</span>
+                <input class="std-input" type="text" data-bind="value: utmTerm, valueUpdate: 'afterkeydown'" />
+            </label>
+
+            <label class="std-label">
+                <span class="std-label-text">Conteúdo</span>
+                <input class="std-input" type="text" data-bind="value: utmContent, valueUpdate: 'afterkeydown'" />
+            </label>
+
+            <label class="std-label">
+                <span class="std-label-text">Campanha*</span>
+                <input class="std-input" type="text" data-bind="value: utmCampaign, valueUpdate: 'afterkeydown'" />
+            </label>
+
+            <label class="std-label textarea-label">
+                <span class="std-label-text">Url gerada:</span>
+
+                <textarea data-bind="text: fullUrl" id="full-url" readonly class=" std-input std-textarea"></textarea>
+                <button class="button copy-button" id="copy" data-clipboard-target="full-url">Copiar url</button>
+            </label>
+        </fieldset>
+    </form>
+
+    <h3>Sobre</h3>
+    <p>O DZ UTM Builder é uma ferramenta para inserir tags nas URLs utilizadas em campanhas de marketing, baseada no <a href="https://support.google.com/analytics/answer/1033867?hl=en" target="_blank">URL Builder original do Google</a>. Padronizamos ali, removemos coisas acolá e aqui está o resultado.</p>
+
+    <p>Ao utilizarmos tags nas URLs que são compartilhadas, o Google Analytics nos mostra quantas visitas vieram daquele link.</p>
+
+    <p>Leia mais sobre o URL builder no <a href="http://wiki.dzestudio.com.br/wiki/Google_Analytics" target="_blank">artigo sobre Google Analytics da Wiki</a>.</p>
+
+    <h3>Campos</h3>
+    <ul class="fields-info">
+        <li>
+            <p><strong>Origem (utm_source):</strong> Inserir o nome do site/veículo onde estará o que queremos trackear. Coloca-se o prefixo "DZ" para indicar que a tag foi feita pela DZ Estúdio.</p>
+        </li>
+        <li>
+            <p><strong>Mídia / Formato (utm_medium):</strong> Inserir o tipo de peça/item que será trackeado.</p>
+        </li>
+        <li>
+            <p><strong>Termo (utm_term):</strong> Inserir termos/palavras-chave pagos utilizados na campanha. Esse campo RARAMENTE será preenchido.</p>
+            <p class="secondary"><strong>Ex.:</strong> promo-dia-dos-namorados | carro-ipi-reduzido</p>
+        </li>
+        <li>
+            <p><strong>Conteúdo (utm_content):</strong> Usar uma keyword que identifique as peças de Campanhas diferentes e de uma mesma Campanha. Diferenciar por data de início e/ou por conteúdo/formato da peça.<p>
+
+            <p class="secondary"><strong>Ex.:</strong> Dia-Namorados-040913 | Dia-Namorados-ImgFlor</p>
+        </li>
+        <li>
+            <p><strong>Campanha (utm_campaign):</strong> Inserir o nome da campanha/ação em questão.</p>
+
+            <p class="secondary"><strong>Ex.:</strong> Dia-Namorados | Dia-Pais | Promo-SemanaCobalt</p>
+        </li>
+    </ul>
+    <p class="specs">Com exceção do <strong>Termo</strong>, que deve ser preenchido apenas com minúsculas, recomenda-se que todos os campos sejam preenchidos sem pontuação, sem acentos, com hífen ao invés de espaços e começando cada palavra com letra maiúscula. Se você não preencher assim, nós ajeitamos pra você. :)</p>
+</main>
+
+<footer class="content-block main-footer" role="contentinfo">
+    &copy; <strong>DZ UTM Builder</strong> - MMXIII
+</footer>
+
+<!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/js/libs/jquery-1.10.2.min.js"><\/script>')</script>-->
+<script src="//cdnjs.cloudflare.com/ajax/libs/knockout/2.3.0/knockout-min.js"></script>
+<script src="js/ZeroClipboard.min.js"></script>
+<script>
+    // Convert to title case - used in all the parameters
+    String.prototype.toTitleCase = function () {
+        var smallWords = /^(e|de|a|o|as|os|do|da|dos|das|vs?\.?|via)$/i;
+
+        return this.replace(/([^\W_]+[^\s-]*) */g, function (match, p1, index, title) {
+            if (index > 0 && index + p1.length !== title.length &&
+            p1.search(smallWords) > -1 && title.charAt(index - 2) !== ":" &&
+            title.charAt(index - 1).search(/[^\s-]/) < 0) {
+                return match.toLowerCase();
+            }
+
+            if (p1.substr(1).search(/[A-Z]|\../) > -1) {
+                return match;
+            }
+
+            return match.charAt(0).toUpperCase() + match.substr(1);
+        });
+    };
+
+    var cleanInput = function(input){
+        // trim spaces at start/end of string, remove multiple spaces, convert spaces to +, convert accents
+        output = input.replace(/(^\s+|\s+$)/g, '')
+                      .replace(/\s+/g, ' ')
+                      .replace(/ /g, '-')
+                      .replace(/&/g, '%26')
+                      .replace(/[ÀÁÂÃ]/g, 'A')
+                      .replace(/[àáâã]/g, 'a')
+                      .replace(/[ÈÉÊ]/g, 'E')
+                      .replace(/[èéê]/g, 'e')
+                      .replace(/[ÌÍÎ]/g, 'I')
+                      .replace(/[ìíî]/g, 'i')
+                      .replace(/[ÒÓÔÕ]/g, 'O')
+                      .replace(/[òóôõ]/g, 'o')
+                      .replace(/[ÙÚ]/g, 'U')
+                      .replace(/[ùú]/g, 'u')
+                      .replace(/ç/g, 'c');
+        return output;
+    }
+
+    // ZeroClipboard stuff
+    ZeroClipboard.setDefaults( { moviePath: 'js/ZeroClipboard.swf' } );
+    var clip = new ZeroClipboard(document.getElementById('copy'));
+    if (window.onresize) {
+        window.onresize = clip.reposition();
+    }
+
+    // Knockout JS stuff
+    var ViewModel = function() {
+        this.utmSourceValues = [
+            'DZ-Google',
+            'DZ-Facebook',
+            'DZ-Twitter',
+            'DZ-Easy-Mailing',
+            'DZ-Locaweb',
+            'DZ-Youtube',
+            'DZ-Clic-RBS',
+            'Outro'
+        ];
+
+        this.utmMediumValues = [
+            'Ads',
+            'Display',
+            'Banner',
+            'Mobile',
+            'Email-Mkt',
+            'Overlay',
+            'Organic',
+            'Post',
+            'Video',
+            'Remarketing',
+            'Outro'
+        ];
+
+        this.plainUrl  = ko.observable();
+        this.utmSource = ko.observable();
+        this.customSource = ko.observable();
+        this.utmMedium = ko.observable();
+        this.customMedium = ko.observable();
+        this.utmTerm  = ko.observable();
+        this.utmContent  = ko.observable();
+        this.utmCampaign  = ko.observable();
+
+        this.fullUrl = ko.computed(function() {
+            var url = '';
+
+            // Return only if all required fields have values
+            if (this.plainUrl() && this.utmSource() && this.utmMedium() && this.utmCampaign()) {
+
+                this.plainUrl(cleanInput(this.plainUrl()));
+
+                if (this.plainUrl().substring(0,7) === 'http://' || this.plainUrl().substring(0,8) === 'https://') {
+                    url += this.plainUrl();
+                } else {
+                   url += 'http://' + this.plainUrl();
+                }
+
+                if (this.plainUrl().indexOf('?') === -1) {
+                    url += '?';
+                } else {
+                    url += '&';
+                }
+
+                if (this.utmSource() === 'Outro'){
+                    var clearCustomSource = cleanInput(this.customSource().toTitleCase());
+                    if (clearCustomSource.substring(0,3) !== 'DZ-'){
+                        clearCustomSource = 'DZ-' + clearCustomSource;
+                    }
+                    url += 'utm_source=' + clearCustomSource;
+                } else {
+                    url += 'utm_source=' + cleanInput(this.utmSource());
+                }
+
+                if (this.utmMedium() === 'Outro'){
+                    url += '&utm_medium=' + cleanInput(this.customMedium().toTitleCase());
+                } else {
+                    url += '&utm_medium=' + cleanInput(this.utmMedium());
+                }
+
+                if (this.utmTerm()){
+                    url += '&utm_term=' + cleanInput(this.utmTerm().toLowerCase());
+                }
+                if (this.utmContent()){
+                    url += '&utm_content=' + cleanInput(this.utmContent().toTitleCase());
+                }
+
+                url += '&utm_campaign=' + cleanInput(this.utmCampaign().toTitleCase());
+            }
+
+            return url; //
+        }, this);
+    };
+
+    ko.applyBindings(new ViewModel());
+</script>
+</body>
+</html>
