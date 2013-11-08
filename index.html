@@ -235,6 +235,12 @@
                    url += 'http://' + this.plainUrl();
                 }
 
+                var hashPieces = url.split('#');
+
+                if (hashPieces.length > 1) {
+                    url = hashPieces[0];
+                }
+
                 if (this.plainUrl().indexOf('?') === -1) {
                     url += '?';
                 } else {
@@ -265,9 +271,13 @@
                 }
 
                 url += '&utm_campaign=' + cleanInput(this.utmCampaign().toTitleCase());
+
+                if (hashPieces.length > 1) {
+                    url = url + '#' + hashPieces[1];
+                }
             }
 
-            return url; //
+            return url;
         }, this);
     };
 
