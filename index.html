@@ -199,16 +199,16 @@
         ];
 
         this.utmMediumValues = [
-            'Ads',
-            'Display',
-            'Banner',
-            'Mobile',
-            'Email-Mkt',
-            'Overlay',
-            'Organic',
-            'Post',
-            'Video',
-            'Remarketing',
+            'DZ-Ads',
+            'DZ-Display',
+            'DZ-Banner',
+            'DZ-Mobile',
+            'DZ-Email-Mkt',
+            'DZ-Overlay',
+            'DZ-Organic',
+            'DZ-Post',
+            'DZ-Video',
+            'DZ-Remarketing',
             'Outro'
         ];
 
@@ -258,7 +258,12 @@
                 }
 
                 if (this.utmMedium() === 'Outro'){
-                    url += '&utm_medium=' + cleanInput(this.customMedium().toTitleCase());
+                    var clearCustomMedium = cleanInput(this.customMedium().toTitleCase());
+                    if (clearCustomMedium.substring(0,3) !== 'DZ-'){
+                        clearCustomMedium = 'DZ-' + clearCustomMedium;
+                    }
+
+                    url += '&utm_medium=' + clearCustomMedium;
                 } else {
                     url += '&utm_medium=' + cleanInput(this.utmMedium());
                 }
