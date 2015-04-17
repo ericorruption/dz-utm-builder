@@ -19,7 +19,8 @@ String.prototype.toTitleCase = function () {
 
 var cleanInput = function(input){
     // trim spaces at start/end of string, remove multiple spaces, convert spaces to -, convert accents
-    output = input.replace(/(^\s+|\s+$)/g, '')
+    output = input.replace(/-/g, ' ')
+                  .replace(/(^\s+|\s+$)/g, '')
                   .replace(/\s+/g, ' ')
                   .replace(/ /g, '-')
                   .replace(/&/g, '%26')
