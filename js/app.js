@@ -149,8 +149,18 @@ var ViewModel = function() {
     this.utmCampaign.subscribe(function(newValue) {
         // Check if starts with 'DZ...'
         if (newValue.length > 0) {
-            if(!newValue.toTitleCase().startsWith('Dz')) {
-                this.target('Dz-' + newValue);
+            if(!newValue.toTitleCase().startsWith('DZ')) {
+                this.target('DZ-' + newValue);
+            }
+        }
+    });
+
+    // UTM Content
+    this.utmContent.subscribe(function(newValue) {
+        // Check if starts with 'DZ...'
+        if (newValue.length > 0) {
+            if(!newValue.toTitleCase().startsWith('DZ')) {
+                this.target('DZ-' + newValue);
             }
         }
     });
