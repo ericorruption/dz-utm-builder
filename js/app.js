@@ -87,8 +87,6 @@ var ViewModel = function() {
         // Return only if all required fields have values
         if (this.plainUrl() && this.utmSource() && this.utmMedium() && this.utmCampaign()) {
 
-            this.plainUrl(cleanInput(this.plainUrl()));
-
             if (this.plainUrl().substring(0,7) === 'http://' || this.plainUrl().substring(0,8) === 'https://') {
                 url += this.plainUrl();
             } else {
